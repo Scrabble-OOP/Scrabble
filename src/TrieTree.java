@@ -1,5 +1,5 @@
 public class TrieTree {
-    private Node head = new Node();
+    private Node head;
 
     public TrieTree(){
         head = new Node();
@@ -16,6 +16,32 @@ public class TrieTree {
             if(i == size -1) temp.setEnd(true);
         }
     }
+
+
+
+    public boolean search(String s){
+
+        Node aux = head;
+        for(int i = 0; i < s.length(); i++){
+
+            if(aux.getChild((int)s.charAt(i) - 97) == null)  return false;
+
+            aux = aux.getChild((int)s.charAt(i) - 97);
+        }
+
+        return true;
+
+    }
+
+
+
+
+
+
+
+
+
+
 
     public void print(){
         printAux(head, "");
