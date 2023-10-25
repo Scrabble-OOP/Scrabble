@@ -1,17 +1,19 @@
-public class Node {
+public class Node implements java.io.Serializable{
     private char data;
-    private Node[] children = new Node[26];
-    private boolean isEnd = false;
+
+    private final int SIZE = 27;
+    private Node[] children;
+    private boolean isEnd;
 
     public Node(){
         data = ' ';
-        children = new Node[26];
+        children = new Node[SIZE];
         isEnd = false;
     }
 
     public Node(char letter){
         data = letter;
-        children = new Node[26];
+        children = new Node[SIZE];
         isEnd = false;
     }
 
