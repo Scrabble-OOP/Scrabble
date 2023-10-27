@@ -1,4 +1,4 @@
-public class Node implements java.io.Serializable{
+public class Node{
     private char data;
 
     private final int SIZE = 27;
@@ -40,4 +40,5 @@ public class Node implements java.io.Serializable{
     public boolean getEnd(){
         return isEnd;
     }
+
 }

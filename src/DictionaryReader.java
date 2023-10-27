@@ -11,11 +11,11 @@ public class DictionaryReader {
 
     public DictionaryReader() {
 
-        readDictionary();
+        this.diccionario = readDictionary();
 
     }
 
-    public void readDictionary() {
+    public TrieTree readDictionary() {
 
         TrieTree diccionario = new TrieTree();
         String line = null;
@@ -26,10 +26,13 @@ public class DictionaryReader {
                 diccionario.add(line);
             }
 
+            return diccionario;
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        return null;
     }
 
     public TrieTree getDiccionario() {

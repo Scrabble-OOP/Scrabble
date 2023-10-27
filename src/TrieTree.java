@@ -1,6 +1,5 @@
-import java.io.Serializable;
 
-public class TrieTree implements Serializable {
+public class TrieTree{
     private Node head;
 
     public TrieTree(){
@@ -29,7 +28,6 @@ public class TrieTree implements Serializable {
             }
 
             temp = temp.getChild(index);
-            //if(i == size - 1) temp.setEnd(true);
 
         }temp.setEnd(true);
     }
@@ -45,7 +43,7 @@ public class TrieTree implements Serializable {
             char currentChar = s.charAt(i);
 
             if(currentChar == 'ñ'){
-                index = 26; //
+                index = 26;
             } else {
                 index = (int)currentChar - 97;
             }

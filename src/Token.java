@@ -1,9 +1,13 @@
 public class Token {
 
     private char letter;
+    private byte score;
 
-    public Token(char letter) {
+    public Token(char letter, byte score) {
+
         this.letter = letter;
+        this.score = score;
+
     }
 
     public char getToken() {
@@ -14,6 +18,13 @@ public class Token {
         this.letter = letter;
     }
 
+    public void setScore(byte score) {
+        this.score = score;
+    }
+
+    public byte getScore(){
+        return score;
+    }
 
 
 
