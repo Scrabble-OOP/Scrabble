@@ -1,27 +1,45 @@
 public class Cell {
 
-    private int value;
+    private int factLetter;
+    private int factWord;
     private Token token;
 
 
-    public Cell(int value) {
-        this.value = value;
+
+
+
+
+    public Cell(int factLetter, int factWord) {
+        this.factLetter = factLetter;
+        this.factWord = factWord;
         this.token = null;
     }
 
-    public Cell(int value, Token token) {
-        this.value = value;
+    public Cell(int factLetter, int factWord, Token token) {
+
+        this.factLetter = factLetter;
+        this.factWord = factWord;
         this.token = token;
+
     }
 
 
-    public int getValue() {
-        return value;
+    public int getFactLetter() {
+        return factLetter;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setFactLetter(byte factLetter) {
+        this.factLetter = factLetter;
     }
+
+    public int getFactWord() {
+        return factWord;
+    }
+
+    public void setFactWord(byte factWord) {
+        this.factWord = factWord;
+    }
+
 
     public void setToken(Token token) {
         this.token = token;
