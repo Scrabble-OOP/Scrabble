@@ -31,18 +31,23 @@ public class Player {
     }
 
 
+    public void addToken(Sack sack){
 
-    public String toString(){
-
-        String s = name + ":\n";
-        for(int i = 0; i<deck.size(); i++){
-
-            s += deck.get(i).getToken() + " ";
-
-        }
-        return s;
+        deck.add(sack.pop());
 
     }
+
+
+
+    public boolean empty(){
+
+        return deck.isEmpty();
+
+    }
+
+
+
+
 
 
 
