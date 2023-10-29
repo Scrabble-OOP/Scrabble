@@ -38,7 +38,6 @@ public class Sack {
                 tokens.add(new Token(letters[i], scores[i]));
             }
         }
-
         shuffle();
 
     }
@@ -62,6 +61,8 @@ public class Sack {
     public int size() {
         return tokens.size();
     }
+
+
 
 
 }
