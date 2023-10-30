@@ -10,7 +10,7 @@ public class Board {
         for(int i = 0; i<225; i++) board[i/15][i%15] = new Cell();
 
         DictionaryReader a = new DictionaryReader();
-        TrieTree dictionary = a.getDiccionario();
+        dictionary = a.getDiccionario();
 
         board[0][0] = new Cell(1, 3);
         board[0][7] = new Cell(1, 3);
@@ -92,24 +92,22 @@ public class Board {
 
 
 
-    //primer intento de verificación
+    //verificacion de palabras horizontales
     public boolean verify(){
 
         for(int i = 0; i<15; i++){
             for(int j = 0; j<15; j++){
 
-                if(board[i][j].getLetter() == '\0') {
+                if(board[i][j].getLetter() != '_') {
 
-                    String s = board[i][j].getLetter() + "";
-                    while (j < 15 && board[i][j].getLetter() == '\0') {
+                    String s = "";
+                    while (j < 15 && board[i][j].getLetter() != '_') {
 
                         s += board[i][j].getLetter();
                         j++;
 
-                    }
-                    if(!dictionary.search(s)){
-                        return false;
-                    }
+                    }if(!dictionary.search(s)) return false;
+
                 }
             }
 
@@ -117,6 +115,38 @@ public class Board {
 
     }
 
+
+
+    public void insertWord(int x, int y, String word){
+
+        for(int i = 0; i<word.length(); i++){
+
+            board[x][y].setToken(new Token(word.charAt(i)));
+            y++;
+
+        }
+
+    }
+
+
+
+
+
+    public String toString(){
+
+        String s = "";
+
+        for(int i = 0; i<15; i++){
+            for(int j = 0; j<15; j++){
+
+                s += board[i][j].getLetter() + " ";
+
+            }
+            s += "\n";
+        }
+
+        return s;
+    }
 
 
 

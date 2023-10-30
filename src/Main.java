@@ -7,10 +7,9 @@ public class Main {
 
         Sack sack = new Sack();
         Board b = new Board();
+        b.insertWord(7,0,"adios");
         System.out.println(b);
-
-
-
+        System.out.println(b.verify());
 
 
     }

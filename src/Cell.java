@@ -11,9 +11,10 @@ public class Cell {
 
 
     public Cell(int factLetter, int factWord) {
+
         this.factLetter = factLetter;
         this.factWord = factWord;
-        this.token = null;
+        this.token = new Token();
     }
 
     public Cell(int factLetter, int factWord, Token token) {
@@ -28,7 +29,7 @@ public class Cell {
 
         this.factLetter = 1;
         this.factWord = 1;
-        this.token = null;
+        this.token = new Token();
 
     }
 
@@ -59,6 +60,13 @@ public class Cell {
     }
 
     public char getLetter(){ return token.getToken();}
+
+
+    public void setLetter(char letter){
+
+        token.setToken(letter);
+
+    }
 
 
 }
