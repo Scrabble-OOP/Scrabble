@@ -4,6 +4,8 @@ public class Cell {
     private int factWord;
     private Token token;
 
+    private boolean isFirst;
+
 
 
 
@@ -59,13 +61,25 @@ public class Cell {
         return token;
     }
 
-    public char getLetter(){ return token.getToken();}
+    public char getLetter(){
+        return token.getToken();
+    }
 
 
     public void setLetter(char letter){
 
         token.setToken(letter);
 
+    }
+
+
+
+    public boolean isFirst() {
+        return isFirst;
+    }
+
+    public void setFirst(boolean isFirst) {
+        this.isFirst = isFirst;
     }
 
 

@@ -20,10 +20,10 @@ public class Token {
         this.letter = letter;
         if(letter == '_') this.score = 0;
 
-        else
+        else if(letter == 'ñ') this.score = 8;
 
-            if(letter == 'ñ') this.score = 8;
-            else this.score = scores[letter - 'a'];
+        else this.score = scores[letter - 'a'];
+
 
     }
 

@@ -92,23 +92,56 @@ public class Board {
 
 
 
-    //verificacion de palabras horizontales
+
+
+
+
+
+
+
+
+
+
+
+    private boolean verifyHor(int x, int y) {
+
+        String word = "";
+        while (x < 15 && board[x][y].getLetter() != '_') {
+
+            word += board[x][y].getLetter();
+            y++;
+
+        }return dictionary.search(word);
+
+    }
+
+    private boolean verifyVert(int x, int y) {
+
+        String word = "";
+        while (y < 15 && board[x][y].getLetter() != '_') {
+
+            word += board[x][y].getLetter();
+            x++;
+
+        }return dictionary.search(word);
+
+    }
+
+    //se empieza a verificar una casilla, si es la primera letra de una palabra .getIsFirst() == true
+
     public boolean verify(){
 
-        for(int i = 0; i<15; i++){
-            for(int j = 0; j<15; j++){
+        for(int i = 0; i<14; i++) {
 
-                if(board[i][j].getLetter() != '_') {
+            for (int j = 0; j < 14; j++) {
 
-                    String s = "";
-                    while (j < 15 && board[i][j].getLetter() != '_') {
+                if (board[i][j].isFirst() && board[i][j].getLetter() != '_') {
 
-                        s += board[i][j].getLetter();
-                        j++;
-
-                    }if(!dictionary.search(s)) return false;
+                    if (j<14 && board[i][j + 1].getLetter() != '_' && !verifyHor(i, j)) return false;
+                    if (i<14 && board[i + 1][j].getLetter() != '_' && !verifyVert(i, j)) return false;
 
                 }
+
             }
 
         }return true;
@@ -117,12 +150,23 @@ public class Board {
 
 
 
-    public void insertWord(int x, int y, String word){
 
+
+
+
+
+
+
+    //a lo mejor sea beneficioso trabajar el insert con valor de retorno booleano
+
+    public void insertWord(int x, int y, String word, boolean isHor){
+
+        board[x][y].setFirst(true);
         for(int i = 0; i<word.length(); i++){
 
             board[x][y].setToken(new Token(word.charAt(i)));
-            y++;
+            if(isHor) y++;
+            else x++;
 
         }
 
@@ -144,7 +188,6 @@ public class Board {
             }
             s += "\n";
         }
-
         return s;
     }
 
