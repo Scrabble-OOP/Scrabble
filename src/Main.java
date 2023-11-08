@@ -7,8 +7,8 @@ public class Main {
 
         Sack sack = new Sack();
         Board b = new Board();
-        b.insertWord(7,0,"pinga", true);
-        b.insertWord(6,2,"union", false);
+        b.insertWord(14,0,"hola", true);
+        b.insertWord(0,14,"union", false);
         System.out.println(b);
         System.out.println(b.verify());
 

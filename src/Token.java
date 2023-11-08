@@ -18,6 +18,7 @@ public class Token {
     public Token(char letter) {
 
         this.letter = letter;
+
         if(letter == '_') this.score = 0;
 
         else if(letter == 'ñ') this.score = 8;

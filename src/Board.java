@@ -106,7 +106,7 @@ public class Board {
     private boolean verifyHor(int x, int y) {
 
         String word = "";
-        while (x < 15 && board[x][y].getLetter() != '_') {
+        while (y < 15 && board[x][y].getLetter() != '_') {
 
             word += board[x][y].getLetter();
             y++;
@@ -118,7 +118,7 @@ public class Board {
     private boolean verifyVert(int x, int y) {
 
         String word = "";
-        while (y < 15 && board[x][y].getLetter() != '_') {
+        while (x < 15 && board[x][y].getLetter() != '_') {
 
             word += board[x][y].getLetter();
             x++;
@@ -131,9 +131,9 @@ public class Board {
 
     public boolean verify(){
 
-        for(int i = 0; i<14; i++) {
+        for(int i = 0; i<15; i++) {
 
-            for (int j = 0; j < 14; j++) {
+            for (int j = 0; j < 15; j++) {
 
                 if (board[i][j].isFirst() && board[i][j].getLetter() != '_') {
 
@@ -144,7 +144,8 @@ public class Board {
 
             }
 
-        }return true;
+        }if(board[14][14].isFirst()) return verifyHor(14, 14);
+        return true;
 
     }
 
@@ -161,8 +162,14 @@ public class Board {
 
     public void insertWord(int x, int y, String word, boolean isHor){
 
+        Cell [][] cp = copy(board);
         board[x][y].setFirst(true);
         for(int i = 0; i<word.length(); i++){
+
+            if(board[x][y].getLetter() != '_' && board[x][y].getLetter() != word.charAt(i)){
+                board = cp;
+                return;
+            }
 
             board[x][y].setToken(new Token(word.charAt(i)));
             if(isHor) y++;
@@ -173,6 +180,17 @@ public class Board {
     }
 
 
+
+
+
+    private static Cell[][] copy(Cell[][] board){
+
+        Cell[][] copy = new Cell[15][15];
+        for(int i = 0; i<225; i++)
+            copy[i/15][i%15] = new Cell(board[i/15][i%15].getFactLetter(), board[i/15][i%15].getFactWord(), board[i/15][i%15].getToken());
+        return copy;
+
+    }
 
 
 
@@ -190,6 +208,8 @@ public class Board {
         }
         return s;
     }
+
+
 
 
 
