@@ -1,20 +1,34 @@
-import java.util.ArrayList;
+import java.util.List;
 
 
 public class Player {
 
     private String name;
-    private ArrayList<Token> deck;
     private int score;
+    private Deck deck;
 
     public Player(String name, Sack sack){
 
         this.name = name;
-        deck = new ArrayList<Token>();
-
-        for(int i = 0; i<7; i++) deck.add(sack.pop());
-
+        deck = new Deck(sack);
         score = 0;
+
+    }
+
+
+
+
+
+    public List<Token> getDeck(){
+
+        return deck.getDeck();
+
+    }
+
+
+    public String getName(){
+
+        return name;
 
     }
 
@@ -31,9 +45,15 @@ public class Player {
     }
 
 
-    public void addToken(Sack sack){
+    public void add(Sack sack){
 
         deck.add(sack.pop());
+
+    }
+
+    public void remove(int i){
+
+        deck.remove(i);
 
     }
 
@@ -44,6 +64,24 @@ public class Player {
         return deck.isEmpty();
 
     }
+
+
+    public boolean win(){
+
+        return deck.isEmpty();
+
+    }
+
+
+
+
+    public String toString(){
+
+        return name + " "  + " " + deck.toString();
+
+    }
+
+
 
 
 

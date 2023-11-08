@@ -7,10 +7,12 @@ public class Main {
 
         Sack sack = new Sack();
         Board b = new Board();
-        b.insertWord(14,0,"hola", true);
-        b.insertWord(0,14,"union", false);
-        System.out.println(b);
-        System.out.println(b.verify());
+        System.out.println(sack.size());
+
+        Player a = new Player("daniel", sack);
+
+        System.out.println(a);
+        System.out.println(sack.size());
 
 
 

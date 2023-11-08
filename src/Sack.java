@@ -25,8 +25,8 @@ public class Sack {
     public Sack() {
 
         tokens = new ArrayList<Token>();
-        tokens.add(new Token());
-        tokens.add(new Token());
+        tokens.add(new Token(true));
+        tokens.add(new Token(true));
         for(int i = 0; i<27; i++){
 
             for(int j = 0; j<cant[i]; j++){
@@ -58,6 +58,18 @@ public class Sack {
     }
 
 
+    public boolean isEmpty() {
+        return tokens.isEmpty();
+    }
+
+    public String toString() {
+
+        String s = "";
+        for(int i = 0; i<tokens.size(); i++){
+            s += tokens.get(i).toString() + " ";
+        }
+        return s;
+    }
 
 
 }

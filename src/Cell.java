@@ -62,7 +62,7 @@ public class Cell {
     }
 
     public char getLetter(){
-        return token.getToken();
+        return token.getLetter();
     }
 
 
