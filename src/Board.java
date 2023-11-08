@@ -89,6 +89,13 @@ public class Board {
 
     }
 
+    public Cell[][] getBoard(){
+
+        return board;
+
+    }
+
+
 
 
 
@@ -135,17 +142,14 @@ public class Board {
 
             for (int j = 0; j < 15; j++) {
 
-                if (board[i][j].isFirst() && board[i][j].getLetter() != '_') {
+                if (board[i][j].isFirst()) {
 
                     if (j<14 && board[i][j + 1].getLetter() != '_' && !verifyHor(i, j)) return false;
                     if (i<14 && board[i + 1][j].getLetter() != '_' && !verifyVert(i, j)) return false;
 
                 }
-
             }
-
-        }if(board[14][14].isFirst()) return verifyHor(14, 14);
-        return true;
+        }return true;
 
     }
 
@@ -160,7 +164,10 @@ public class Board {
 
     //a lo mejor sea beneficioso trabajar el insert con valor de retorno booleano
 
-    public void insertWord(int x, int y, String word, boolean isHor){
+    public void insertWord(int x, int y, String word, char orientation){
+
+        boolean isHor = true;
+        if(orientation != 'h') isHor = false;
 
         Cell [][] cp = copy(board);
         board[x][y].setFirst(true);
@@ -170,7 +177,6 @@ public class Board {
                 board = cp;
                 return;
             }
-
             board[x][y].setToken(new Token(word.charAt(i)));
             if(isHor) y++;
             else x++;
@@ -183,7 +189,7 @@ public class Board {
 
 
 
-    private static Cell[][] copy(Cell[][] board){
+    public static Cell[][] copy(Cell[][] board){
 
         Cell[][] copy = new Cell[15][15];
         for(int i = 0; i<225; i++)
@@ -191,6 +197,7 @@ public class Board {
         return copy;
 
     }
+
 
 
 
