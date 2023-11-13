@@ -31,11 +31,7 @@ public class Player {
 
     }
 
-    public boolean contains(String word){
 
-        return deck.canFormWord(word);
-
-    }
 
     public void removeWord(String word){
 

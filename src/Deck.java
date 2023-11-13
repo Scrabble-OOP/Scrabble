@@ -12,11 +12,24 @@ public class Deck {
 
     }
 
+
+
+
+
+
     public List<Token> getDeck(){
 
         return deck;
 
     }
+
+
+
+
+
+
+
+
 
     public void remove(int i){
 
@@ -24,11 +37,24 @@ public class Deck {
 
     }
 
+
+
+
+
+
+
+
     public void add(Token a){
 
         deck.add(a);
 
     }
+
+
+
+
+
+
 
     public int search(char letter){
 
@@ -40,11 +66,26 @@ public class Deck {
 
     }
 
+
+
+
+
+
+
+
     public boolean isEmpty(){
 
         return deck.isEmpty();
 
     }
+
+
+
+
+
+
+
+
 
 
     public String toString(){
@@ -57,27 +98,43 @@ public class Deck {
 
 
 
+
+
+
+
+
+
     public boolean canFormWord(String word) {
 
         int[] letterCount = new int[27]; // Incluimos un índice adicional para la 'ñ'
         // Contar las letras en el ArrayList
         for (Token token : deck) {
 
-            if (token.getLetter() == 'ñ')
-                letterCount[26]++;
-            else
-                letterCount[token.getLetter() - 'a']++;
+            int index = ((token.getLetter() == 'ñ') ? 26 : token.getLetter() - 'a');
+            letterCount[index]++;
 
         }
-        // Verificar si es posible formar la palabra
+
         for (char c : word.toCharArray()) {
 
             int index = ((c =='ñ') ? 26 : c - 'a');
             if (letterCount[index] < 0)  return false;
             letterCount[index]--;                       // No hay suficientes letras para formar la palabra
 
-        } return true;
+        }return true;
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public void removeWord(String word){
