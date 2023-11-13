@@ -94,7 +94,7 @@ public class Game {
             System.out.println("Insert the word: ");
             String word = scanner.nextLine();
 
-            if(word.length() < 2 || !players.get(turn).contains(word)) continue;
+            if(!players.get(turn).contains(word)) continue;
 
             System.out.println("Insert the row: ");
             int row = Integer.parseInt(System.console().readLine());

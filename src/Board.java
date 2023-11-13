@@ -144,13 +144,13 @@ public class Board {
 
                 if (board[i][j].isFirst()) {
 
+                    if(i<14 && j<14 && board[i][j+1].getLetter() == '_' && board[i+1][j].getLetter() == '_') return false;
                     if (j<14 && board[i][j + 1].getLetter() != '_' && !verifyHor(i, j)) return false;
                     if (i<14 && board[i + 1][j].getLetter() != '_' && !verifyVert(i, j)) return false;
 
                 }
             }
-        }return true;
-
+        }return !board[14][14].isFirst();
     }
 
 
