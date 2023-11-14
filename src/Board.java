@@ -89,6 +89,11 @@ public class Board {
 
     }
 
+    public Cell[][] getBoard(){
+
+        return board;
+
+    }
 
 
 
@@ -103,49 +108,130 @@ public class Board {
 
 
 
+    //En estas verificaciones, nos vamos hasta el inicio de la palabra y despues verificamos si la palabra es valida
+    private boolean verifyFirstRow(){
+
+        for(int i = 1; i<14; ++i){
+
+            if(board[0][i].getLetter() != '_'){
+
+                if(board[0][i+1].getLetter() == '_' && board[1][i].getLetter() == '_' && board[0][i-1].getLetter() == '_') return false;
+                if(board[0][i+1].getLetter() != '_' && !verifyHor(0, i)) return false;
+                if(board[1][i].getLetter() != '_' && !verifyVert(0, i)) return false;
+
+            }
+
+        }return true;
+
+    }
+    private boolean verifyLastRow(){
+
+        for(int i = 1; i<14; i++){
+
+            if(board[14][i].getLetter() != '_'){
+
+                if(board[14][i+1].getLetter() == '_' && board[13][i].getLetter() == '_' && board[14][i-1].getLetter() == '_') return false;
+                if(board[14][i+1].getLetter() != '_' && !verifyHor(14, i)) return false;
+                if(board[13][i].getLetter() != '_' && !verifyVert(14, i)) return false;
+
+            }
+
+        }return true;
+
+    }
+    private boolean verifyFirstColumn(){
+
+        for(int j = 1; j<14; j++){
+
+            if(board[j][0].getLetter() != '_'){
+
+                if(board[j+1][0].getLetter() == '_' && board[j][1].getLetter() == '_' && board[j-1][0].getLetter() == '_') return false;
+                if(board[j+1][0].getLetter() != '_' && !verifyVert(j, 0)) return false;
+                if(board[j][1].getLetter() != '_' && !verifyHor(j, 0)) return false;
+
+            }
+        }return true;
+
+    }
+    private boolean verifyLastColumn(){
+
+        for(int j = 1; j<14; j++){
+
+            if(board[j][14].getLetter() != '_'){
+
+                if(board[j+1][14].getLetter() == '_' && board[j][13].getLetter() == '_' && board[j-1][14].getLetter() == '_') return false;
+                if(board[j+1][14].getLetter() != '_' && !verifyVert(j, 14)) return false;
+                if(board[j][13].getLetter() != '_' && !verifyHor(j, 14)) return false;
+
+            }
+
+        }return true;
+
+    }
+    private boolean verifyPoints(){
+
+        if(board[0][0].getLetter() != '_' && board[0][1].getLetter() == '_' && board[1][0].getLetter() == '_') return false;
+        if(board[0][14].getLetter() != '_' && board[0][13].getLetter() == '_' && board[1][14].getLetter() == '_') return false;
+        if(board[14][0].getLetter() != '_' && board[13][0].getLetter() == '_' && board[14][1].getLetter() == '_') return false;
+        if(board[14][14].getLetter() != '_' && board[13][14].getLetter() == '_' && board[14][13].getLetter() == '_') return false;
+        return true;
+
+    }
     private boolean verifyHor(int x, int y) {
 
+        while(y >= 0 && board[x][y-1].getLetter() != '_') --y;
         String word = "";
-        while (y < 15 && board[x][y].getLetter() != '_') {
+        while(y<15 && board[x][y].getLetter() != '_') {
 
             word += board[x][y].getLetter();
-            y++;
+            ++y;
 
         }return dictionary.search(word);
 
     }
-
     private boolean verifyVert(int x, int y) {
 
+        while(x >= 0 && board[x-1][y].getLetter() != '_') --x;
         String word = "";
-        while (x < 15 && board[x][y].getLetter() != '_') {
+        while(x<15 && board[x][y].getLetter() != '_') {
 
             word += board[x][y].getLetter();
-            x++;
+            ++x;
 
         }return dictionary.search(word);
 
     }
-
-    //se empieza a verificar una casilla, si es la primera letra de una palabra .getIsFirst() == true
-
     public boolean verify(){
 
-        for(int i = 0; i<15; i++) {
+        for(int i = 1; i<14; i++)
+            for(int j = 1; j<14; ++j){
 
-            for (int j = 0; j < 15; j++) {
+                if(board[i][j].getLetter() != '_'){
 
-                if (board[i][j].isFirst() && board[i][j].getLetter() != '_') {
-
-                    if (j<14 && board[i][j + 1].getLetter() != '_' && !verifyHor(i, j)) return false;
-                    if (i<14 && board[i + 1][j].getLetter() != '_' && !verifyVert(i, j)) return false;
+                    if(board[i][j+1].getLetter() == '_' && board[i][j-1].getLetter() == '_' && board[i+1][j].getLetter() == '_' && board[i-1][j].getLetter() == '_') return false;
+                    if((board[i][j+1].getLetter() != '_' || board[i][j-1].getLetter() != '_') && !verifyHor(i, j)) return false;
+                    if((board[i+1][j].getLetter() != '_' || board[i-1][j].getLetter() != '_') && !verifyVert(i, j)) return false;
 
                 }
 
             }
+        return verifyFirstRow() && verifyLastRow() && verifyFirstColumn() && verifyLastColumn() && verifyPoints();
+    }
 
-        }if(board[14][14].isFirst()) return verifyHor(14, 14);
-        return true;
+
+
+
+
+
+
+
+
+
+    public void insertChar(int x, int y, char letter){
+
+        if(board[x][y].getLetter() == '_')
+
+            board[x][y].setLetter(letter);
 
     }
 
@@ -158,32 +244,9 @@ public class Board {
 
 
 
-    //a lo mejor sea beneficioso trabajar el insert con valor de retorno booleano
-
-    public void insertWord(int x, int y, String word, boolean isHor){
-
-        Cell [][] cp = copy(board);
-        board[x][y].setFirst(true);
-        for(int i = 0; i<word.length(); i++){
-
-            if(board[x][y].getLetter() != '_' && board[x][y].getLetter() != word.charAt(i)){
-                board = cp;
-                return;
-            }
-
-            board[x][y].setToken(new Token(word.charAt(i)));
-            if(isHor) y++;
-            else x++;
-
-        }
-
-    }
 
 
-
-
-
-    private static Cell[][] copy(Cell[][] board){
+    public static Cell[][] copy(Cell[][] board){
 
         Cell[][] copy = new Cell[15][15];
         for(int i = 0; i<225; i++)
@@ -191,6 +254,18 @@ public class Board {
         return copy;
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -37,21 +37,16 @@ public class TrieTree{
 
 
     public boolean search(String s){
+
         Node aux = head;
         int index;
         for(int i = 0; i < s.length(); i++){
             char currentChar = s.charAt(i);
-
-            if(currentChar == 'ñ'){
-                index = 26;
-            } else {
-                index = (int)currentChar - 97;
-            }
-
+            index = ((currentChar == 'ñ') ? 26 : currentChar - 'a');
             if(aux.getChild(index) == null)  return false;
             aux = aux.getChild(index);
         }
-        return true;
+        return aux.getEnd();
     }
 
 
