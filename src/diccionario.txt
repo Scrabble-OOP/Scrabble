@@ -1,4 +1,4 @@
-piiiaronita
+aaronita
 aronico
 aba
 ababa
@@ -24954,6 +24954,7 @@ dañino
 daño
 dañoso
 de
+deme
 dea
 deal
 deambulacion
@@ -37358,6 +37359,7 @@ fañado
 fañar
 fañoso
 fe
+fea
 fealdad
 feamente
 febeo
@@ -55066,6 +55068,8 @@ sajonia
 salamanca
 samuel
 san
+sana
+sanada
 sancho
 santiago
 satanas

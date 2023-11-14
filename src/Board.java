@@ -192,11 +192,31 @@ public class Board {
     }
     private boolean verifyPoints(){
 
-        if(board[0][0].getLetter() != '_' && board[0][1].getLetter() == '_' && board[1][0].getLetter() == '_') return false;
-        if(board[0][14].getLetter() != '_' && board[0][13].getLetter() == '_' && board[1][14].getLetter() == '_') return false;
-        if(board[14][0].getLetter() != '_' && board[13][0].getLetter() == '_' && board[14][1].getLetter() == '_') return false;
-        if(board[14][14].getLetter() != '_' && board[13][14].getLetter() == '_' && board[14][13].getLetter() == '_') return false;
-        return true;
+        if(board[0][0].getLetter() != '_'){
+
+            if(board[0][1].getLetter() == '_' && board[1][0].getLetter() == '_') return false;
+            if(board[0][1].getLetter() != '_' && !verifyHor(0, 0)) return false;
+            if(board[1][0].getLetter() != '_' && !verifyVert(0, 0)) return false;
+
+        }if(board[0][14].getLetter() != '_'){
+
+            if(board[0][13].getLetter() == '_' && board[1][14].getLetter() == '_') return false;
+            if(board[0][13].getLetter() != '_' && !verifyHor(0, 14)) return false;
+            if(board[1][14].getLetter() != '_' && !verifyVert(0, 14)) return false;
+
+        }if(board[14][0].getLetter() != '_'){
+
+            if(board[14][1].getLetter() == '_' && board[13][0].getLetter() == '_') return false;
+            if(board[14][1].getLetter() != '_' && !verifyHor(14, 0)) return false;
+            if(board[13][0].getLetter() != '_' && !verifyVert(14, 0)) return false;
+
+        }if(board[14][14].getLetter() != '_'){
+
+            if(board[14][13].getLetter() == '_' && board[13][14].getLetter() == '_') return false;
+            if(board[14][13].getLetter() != '_' && !verifyHor(14, 14)) return false;
+            if(board[13][14].getLetter() != '_' && !verifyVert(14, 14)) return false;
+
+        }return true;
 
     }
     private boolean verifyHor(int x, int y) {
@@ -255,7 +275,7 @@ public class Board {
 
 
 
-
+    //Si retorna true, entonces se quita el char del deck del jugador
     public boolean insertChar(int x, int y, char letter){
 
         if(board[x][y].getLetter() == '_') {

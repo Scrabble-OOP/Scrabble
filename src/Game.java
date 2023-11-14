@@ -119,7 +119,6 @@ public class Game {
             System.out.println("Enter a character, E to end turn or T to take a token: ");
             input = scanner.nextLine();
 
-
             if (input.equals("E")) break;
 
             if(input.equals("T")){
@@ -130,8 +129,7 @@ public class Game {
                 return;
 
             }
-
-
+            
             if (input.length() != 1) continue;
             char c = input.charAt(0);
             int row, col;
@@ -149,8 +147,15 @@ public class Game {
 
             System.out.println("Valid");
             players.get(turn).addScore(board.getScore() - aux.getScore());
-            nextTurn();
+
+            if(players.get(turn).win()){
+
+                System.out.println("Player " + players.get(turn).getName() + " wins!");
+                return;
+
+            }nextTurn();
             return;
+
         }
 
         System.out.println("Invalid");
