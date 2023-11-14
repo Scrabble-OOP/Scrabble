@@ -14,6 +14,8 @@ public class Game {
 
     private int jumps;
 
+    private Scanner scanner = new Scanner(System.in);
+
 
     public Game(int n){
 
@@ -93,37 +95,71 @@ public class Game {
 
     public void turn(){
 
-
-        board.insertChar(7, 7, 'h');
-        board.insertChar(7, 8, 'o');
-        board.insertChar(7, 9, 'l');
-        board.insertChar(7, 10, 'a');
-        board.insertChar(8, 8, 'l');
-        board.insertChar(9, 8, 'a');
-        board.insertChar(10, 8, 's');
-        board.insertChar(10, 9, 'o');
-        board.insertChar(10, 10, 'l');
         Board aux = new Board(board);
-        aux.verify();
+        Deck auxDeck = new Deck(players.get(turn).getDeck());
+
+        System.out.println("Turn of " + players.get(turn).getName());
+        System.out.println("Score: " + players.get(turn).getScore());
+
+        System.out.println("Do you want to play or skip? (p/s)");
+        String input = scanner.nextLine();
+
+        if(input.equals("s")){
+
+            nextTurn();
+            return;
+
+        }
+        while(true){
+
+            System.out.println("Board: ");
+            System.out.println(board);
+            System.out.println("Deck: ");
+            System.out.println(players.get(turn).getDeck());
+            System.out.println("Enter a character, E to end turn or T to take a token: ");
+            input = scanner.nextLine();
 
 
-        board.insertChar(0, 0, 'a');
-        board.insertChar(0, 1, 'd');
-        board.insertChar(0, 2, 'i');
-        board.insertChar(0, 3, 'o');
-        board.insertChar(0, 4, 's');
-        board.insertChar(0, 14, 'a');
-        board.insertChar(1, 14, 'd');
-        board.insertChar(2, 14, 'i');
-        board.insertChar(3, 14, 'o');
-        board.insertChar(4, 14, 's');
-        board.insertChar(1, 13, 'a');
-        board.insertChar(1, 12, 'r');
-        System.out.println(board);
-        System.out.println(board.verify());
-        System.out.println(board.getScore());
-        System.out.println(aux.getScore());
-        System.out.println(board.getScore() - aux.getScore());
+            if (input.equals("E")) break;
+
+            if(input.equals("T")){
+
+                players.get(turn).add(sack);
+                board = new Board(aux);
+                nextTurn();
+                return;
+
+            }
+
+
+            if (input.length() != 1) continue;
+            char c = input.charAt(0);
+            int row, col;
+            System.out.println("Enter row: ");
+            row = scanner.nextInt();
+            System.out.println("Enter column: ");
+            col = scanner.nextInt();
+            if (board.insertChar(row, col, c))
+                players.get(turn).removeChar(c);
+            else System.out.println("Invalid position");
+
+        }
+
+        if(board.verify()){
+
+            System.out.println("Valid");
+            players.get(turn).addScore(board.getScore() - aux.getScore());
+            nextTurn();
+            return;
+        }
+
+        System.out.println("Invalid");
+        board = new Board(aux);
+        players.get(turn).setDeck(auxDeck.getDeck());
+        turn();
+
+
+
 
     }
 

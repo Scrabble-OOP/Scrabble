@@ -128,6 +128,9 @@ public class Board {
 
 
     //En estas verificaciones, nos vamos hasta el inicio de la palabra y despues verificamos si la palabra es valida
+    //Ademas cada vez que se verifica un tablero, se actualizan sus puntos
+    //El puntaje de un jugador es la diferencia entre el tablero actual y el anterior
+
     private boolean verifyFirstRow(){
 
         for(int i = 1; i<14; ++i){
@@ -253,11 +256,14 @@ public class Board {
 
 
 
-    public void insertChar(int x, int y, char letter){
+    public boolean insertChar(int x, int y, char letter){
 
-        if(board[x][y].getLetter() == '_')
+        if(board[x][y].getLetter() == '_') {
 
             board[x][y].setToken(new Token(letter));
+            return true;
+
+        }return false;
 
     }
 

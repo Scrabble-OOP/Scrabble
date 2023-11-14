@@ -13,6 +13,12 @@ public class Deck {
     }
 
 
+    public Deck(List<Token> aux){
+
+        deck = new ArrayList<>(aux);
+
+    }
+
 
 
 
@@ -31,9 +37,10 @@ public class Deck {
 
 
 
-    public void remove(int i){
 
-        deck.remove(i);
+    public void remove(char i){
+
+        deck.remove(search(i));
 
     }
 
@@ -136,17 +143,6 @@ public class Deck {
 
 
 
-
-    public void removeWord(String word){
-
-        for(int i = 0; i<word.length(); i++){
-
-            int index = search(word.charAt(i));
-            deck.remove(index);
-
-        }
-
-    }
 
 
 

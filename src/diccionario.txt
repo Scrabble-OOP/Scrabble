@@ -37857,6 +37857,7 @@ fimbria
 fimo
 fimosis
 fin
+fina
 finable
 finado
 final
@@ -55037,7 +55038,7 @@ platon
 polonia
 proteo
 prusia
-pu
+pura
 purisima
 portland
 quico
@@ -57410,6 +57411,7 @@ osmosis
 osmometro
 osmotico
 oso
+osos
 osornino
 ososo
 ossobuco
@@ -74155,6 +74157,7 @@ tequila
 tequio
 tequioso
 ter
+tia
 terapeuta
 terapia
 terapeutico

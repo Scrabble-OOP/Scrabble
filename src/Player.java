@@ -19,9 +19,17 @@ public class Player {
 
 
 
+
+
     public List<Token> getDeck(){
 
         return deck.getDeck();
+
+    }
+
+    public void setDeck(List<Token> aux){
+
+        deck = new Deck(aux);
 
     }
 
@@ -33,11 +41,6 @@ public class Player {
 
 
 
-    public void removeWord(String word){
-
-        deck.removeWord(word);
-
-    }
 
     public String getName(){
 
@@ -64,7 +67,7 @@ public class Player {
 
     }
 
-    public void remove(int i){
+    public void removeChar(char i){
 
         deck.remove(i);
 

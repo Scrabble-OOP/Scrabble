@@ -25,7 +25,7 @@ public class Sack {
     public Sack() {
 
         tokens = new ArrayList<Token>();
-        //tokens.add(new Token(true)); Esta linease estan comentadas por ahora para evitar los jokers
+        //tokens.add(new Token(true)); Esta lineas estan comentadas por ahora para evitar los jokers
         //tokens.add(new Token(true));
         for(int i = 0; i<27; i++){
 
@@ -34,6 +34,25 @@ public class Sack {
                 tokens.add(new Token(letters[i]));
             }
         }shuffle();
+
+    }
+
+
+
+    public Sack(Sack aux){
+
+        tokens = new ArrayList<>(aux.getSack());
+        shuffle();
+
+    }
+
+
+
+
+
+    public ArrayList<Token> getSack(){
+
+        return tokens;
 
     }
 
