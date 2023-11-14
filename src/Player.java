@@ -25,6 +25,19 @@ public class Player {
 
     }
 
+    public int search(char letter){
+
+        return deck.search(letter);
+
+    }
+
+
+
+    public void removeWord(String word){
+
+        deck.removeWord(word);
+
+    }
 
     public String getName(){
 

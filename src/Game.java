@@ -1,9 +1,12 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
 public class Game {
 
     private List<Player> players;
 
+    private TrieTree dictionary;
     private Sack sack;
 
     private Board board;
@@ -13,25 +16,87 @@ public class Game {
     private int jumps;
 
 
-    public Game(int n){
+    public Game(int n, TrieTree dictionary){
 
-        String name = "";
         players = new ArrayList<Player>();
         sack = new Sack();
         board = new Board();
         for(int i = 0; i<n; i++){
 
-            name = "Player " + (i+1);
-            players.add(new Player(name, new Sack()));
+            players.add(new Player("Player: " + i, sack));
 
-        }turn = 0;
-        jumps = 0;
+        }turn = jumps = 0;
+        this.dictionary = dictionary;
+        turn();
 
     }
+
+
+
+
+
 
     public void nextTurn(){
 
         turn = (turn+1)%players.size();
+        turn();
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void turn(){
+
+
+
 
     }
 

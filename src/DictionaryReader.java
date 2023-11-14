@@ -20,7 +20,7 @@ public class DictionaryReader {
         TrieTree diccionario = new TrieTree();
         String line = null;
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("diccionario.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/diccionario.txt"))) {
 
             while ((line = reader.readLine()) != null) {
                 diccionario.add(line);

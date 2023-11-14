@@ -4,15 +4,10 @@
 public class Main {
     public static void main(String[] args) {
 
+        DictionaryReader reader = new DictionaryReader();
+        TrieTree dictionary = reader.readDictionary();
+        Game game = new Game(2, dictionary);
 
-        Sack sack = new Sack();
-        Board b = new Board();
-        System.out.println(sack.size());
-
-        Player a = new Player("daniel", sack);
-
-        System.out.println(a);
-        System.out.println(sack.size());
 
 
 

@@ -25,8 +25,8 @@ public class Sack {
     public Sack() {
 
         tokens = new ArrayList<Token>();
-        tokens.add(new Token(true));
-        tokens.add(new Token(true));
+        //tokens.add(new Token(true)); Esta linease estan comentadas por ahora para evitar los jokers
+        //tokens.add(new Token(true));
         for(int i = 0; i<27; i++){
 
             for(int j = 0; j<cant[i]; j++){

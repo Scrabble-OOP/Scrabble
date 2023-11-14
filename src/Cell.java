@@ -4,7 +4,6 @@ public class Cell {
     private int factWord;
     private Token token;
 
-    private boolean isFirst;
 
 
 
@@ -72,15 +71,6 @@ public class Cell {
 
     }
 
-
-
-    public boolean isFirst() {
-        return isFirst;
-    }
-
-    public void setFirst(boolean isFirst) {
-        this.isFirst = isFirst;
-    }
 
 
 }
