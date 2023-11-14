@@ -35,6 +35,16 @@ public class Cell {
     }
 
 
+
+    public Cell(Cell aux){
+
+        this.factLetter = aux.getFactLetter();
+        this.factWord = aux.getFactWord();
+        this.token = new Token(aux.getToken());
+
+    }
+
+
     public int getFactLetter() {
         return factLetter;
     }

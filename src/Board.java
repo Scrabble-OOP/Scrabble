@@ -2,6 +2,7 @@ public class Board {
 
     private Cell[][] board;
 
+    private int score;
     private TrieTree dictionary;
 
     public Board(){
@@ -11,6 +12,7 @@ public class Board {
 
         DictionaryReader a = new DictionaryReader();
         dictionary = a.getDiccionario();
+        score = 0;
 
         board[0][0] = new Cell(1, 3);
         board[0][7] = new Cell(1, 3);
@@ -83,6 +85,18 @@ public class Board {
 
     }
 
+    public Board(Board aux){
+
+        score = aux.getScore();
+        dictionary = aux.dictionary;
+        board = new Cell[15][15];
+        for(int i = 0; i<225; i++) board[i/15][i%15] = new Cell(aux.getCell(i/15, i%15));
+
+    }
+
+
+
+
     public Cell getCell(int x, int y){
 
         return board[x][y];
@@ -97,6 +111,11 @@ public class Board {
 
 
 
+    public int getScore(){
+
+        return score;
+
+    }
 
 
 
@@ -179,30 +198,37 @@ public class Board {
     }
     private boolean verifyHor(int x, int y) {
 
-        while(y >= 0 && board[x][y-1].getLetter() != '_') --y;
-        String word = "";
+        while(y > 0 && board[x][y-1].getLetter() != '_') --y;
+        String word = ""; int temp = 0; int fact = 1;
         while(y<15 && board[x][y].getLetter() != '_') {
 
             word += board[x][y].getLetter();
+            temp += board[x][y].getToken().getScore() * board[x][y].getFactLetter();
+            fact *= board[x][y].getFactWord();
             ++y;
 
-        }return dictionary.search(word);
+        }score += temp * fact;
+        return dictionary.search(word);
 
     }
     private boolean verifyVert(int x, int y) {
 
-        while(x >= 0 && board[x-1][y].getLetter() != '_') --x;
-        String word = "";
+        while(x > 0 && board[x-1][y].getLetter() != '_') --x;
+        String word = ""; int temp = 0; int fact = 1;
         while(x<15 && board[x][y].getLetter() != '_') {
 
             word += board[x][y].getLetter();
+            temp += board[x][y].getToken().getScore() * board[x][y].getFactLetter();
+            fact *= board[x][y].getFactWord();
             ++x;
 
-        }return dictionary.search(word);
+        }score += temp * fact;
+        return dictionary.search(word);
 
     }
     public boolean verify(){
 
+        score = 0;
         for(int i = 1; i<14; i++)
             for(int j = 1; j<14; ++j){
 
@@ -231,7 +257,7 @@ public class Board {
 
         if(board[x][y].getLetter() == '_')
 
-            board[x][y].setLetter(letter);
+            board[x][y].setToken(new Token(letter));
 
     }
 
@@ -246,14 +272,7 @@ public class Board {
 
 
 
-    public static Cell[][] copy(Cell[][] board){
 
-        Cell[][] copy = new Cell[15][15];
-        for(int i = 0; i<225; i++)
-            copy[i/15][i%15] = new Cell(board[i/15][i%15].getFactLetter(), board[i/15][i%15].getFactWord(), board[i/15][i%15].getToken());
-        return copy;
-
-    }
 
 
 

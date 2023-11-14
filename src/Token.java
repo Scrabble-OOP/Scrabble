@@ -1,8 +1,7 @@
 public class Token {
 
     private char letter;
-    private byte score;
-
+    private int score;
     private boolean joker;
 
     private final byte[] scores = {
@@ -44,6 +43,17 @@ public class Token {
 
 
 
+    public Token(Token aux){
+
+        this.letter = aux.getLetter();
+        this.score = aux.getScore();
+        this.joker = aux.isJoker();
+
+    }
+
+
+
+
 
 
 
@@ -62,7 +72,7 @@ public class Token {
         this.score = score;
     }
 
-    public byte getScore(){
+    public int getScore(){
         return score;
     }
 
