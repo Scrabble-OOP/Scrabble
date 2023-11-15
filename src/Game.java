@@ -40,6 +40,16 @@ public class Game {
 
 
 
+    public void printPoints(){
+
+        for (Player player : players) {
+            System.out.println(player.getName() + " " + player.getScore());
+        }
+
+    }
+
+
+
     //Se llama cuando un jugador termina su turno
     //Reponemos su deck y pasamos al siguiente jugador
     private void nextTurn(){
@@ -186,6 +196,7 @@ public class Game {
 
             if(players.get(turn).win(sack)){
 
+                sumWinnerEnd();
                 System.out.println("Player " + players.get(turn).getName() + " wins!");
                 return;
 
@@ -208,13 +219,66 @@ public class Game {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private boolean skippedEnd(){
 
         jumps++;
-        return jumps == players.size();
+        if(jumps != players.size()) return false;
+
+        sumSkippedEnd();
+        return true;
 
 
     }
+    //Esta funcion resta la suma de las fichas que quedaron en el atril de cada jugador
+    private void sumSkippedEnd(){
 
+        for(Player player : players) player.addScore(-player.sumDeck());
+
+    }
+
+    private void sumWinnerEnd(){
+
+        int min = Integer.MAX_VALUE, index = turn; //Esto es debido a que si se llama esta funcion implica que el jugador del turno actual fue el que gano
+
+        for(int i = 0; i<players.size(); i++){
+
+            if(i == index){
+                players.get(i).addScore(players.get(i).sumDeck());   //Al que gano se le suman los puntajes de sus fichas
+                continue;
+            }
+            players.get(i).addScore(-players.get(i).sumDeck());  // a los que perdieron se les restan
+
+        }
+
+    }
 
 }

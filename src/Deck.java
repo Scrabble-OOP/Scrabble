@@ -35,7 +35,11 @@ public class Deck {
 
 
 
+    public int size(){
 
+        return deck.size();
+
+    }
 
 
 
@@ -152,6 +156,31 @@ public class Deck {
 
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public int sumDeck(){
+
+        int sum = 0;
+
+        for(Token token : deck) sum += token.getScore();
+
+        return sum;
+
+    }
 
 
 

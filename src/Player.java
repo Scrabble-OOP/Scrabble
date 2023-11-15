@@ -71,11 +71,6 @@ public class Player {
 
 
 
-    public boolean empty(){
-
-        return deck.isEmpty();
-
-    }
 
 
     //Un jugador gana cuando se queda sin fichas y ademas el saco esta vacio
@@ -95,6 +90,17 @@ public class Player {
 
     }
 
+
+
+
+
+
+
+    public int sumDeck(){
+
+        return deck.sumDeck();
+
+    }
 
 
 
