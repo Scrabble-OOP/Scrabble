@@ -35,9 +35,11 @@ public class Game {
 
 
 
-
+    //Se llama cuando un jugador termina su turno
+    //Reponemos su deck y pasamos al siguiente jugador
     public void nextTurn(){
 
+        players.get(turn).replenishDeck(sack);
         turn = (turn+1)%players.size();
         turn();
 

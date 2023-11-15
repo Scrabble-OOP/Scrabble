@@ -105,7 +105,11 @@ public class Deck {
 
 
 
+    public void replenishDeck(Sack a){
 
+        while(deck.size()<7 && !a.isEmpty()) deck.add(a.pop());
+
+    }
 
 
 

@@ -33,9 +33,10 @@ public class Player {
 
     }
 
-    public int search(char letter){
 
-        return deck.search(letter);
+    public void replenishDeck(Sack sack){
+
+        deck.replenishDeck(sack);
 
     }
 
@@ -82,9 +83,10 @@ public class Player {
     }
 
 
-    public boolean win(){
+    //Un jugador gana cuando se queda sin fichas y ademas el saco esta vacio
+    public boolean win(Sack sack){
 
-        return deck.isEmpty();
+        return deck.isEmpty() && sack.isEmpty();
 
     }
 
