@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 
 public class Sack {
@@ -17,6 +18,35 @@ public class Sack {
             12, 2, 4, 5, 12, 1, 2, 2, 6, 1, 1, 4, 2, 5, 1, 9, 2, 2, 5, 6, 4, 5, 1, 1, 1, 1, 1
 
     };
+
+
+
+
+
+
+
+    //Este metodo recibe una lista de tokens
+    //y los agrega al saco
+    //baraja el saco
+    //y devuelve una lista de mismo tamaño pero con otros tokens
+    public List<Token> changeDeck(List<Token> changes){
+
+        List<Token> aux = new ArrayList<>(); int size = changes.size();
+
+        for(int i = 0; i<changes.size(); i++)  tokens.add(new Token(changes.get(i).getLetter()));
+
+        shuffle();
+
+        for(int i = 0; i<size; i++) aux.add(pop());
+
+        return aux;
+
+
+    }
+
+
+
+
 
 
 

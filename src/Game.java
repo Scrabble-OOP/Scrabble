@@ -27,17 +27,22 @@ public class Game {
             players.add(new Player("Player: " + i, sack));
 
         }turn = jumps = 0;
+
+    }
+
+
+
+    public void start(){
+
         turn();
 
     }
 
 
 
-
-
     //Se llama cuando un jugador termina su turno
     //Reponemos su deck y pasamos al siguiente jugador
-    public void nextTurn(){
+    private void nextTurn(){
 
         players.get(turn).replenishDeck(sack);
         turn = (turn+1)%players.size();
@@ -95,10 +100,11 @@ public class Game {
 
 
 
-    public void turn(){
+    private void turn(){
 
         Board aux = new Board(board);
         Deck auxDeck = new Deck(players.get(turn).getDeck());
+        Sack auxSack = new Sack(sack);
 
         System.out.println("Turn of " + players.get(turn).getName());
         System.out.println("Score: " + players.get(turn).getScore());
@@ -118,7 +124,6 @@ public class Game {
 
         }
 
-        jumps=0; //Si algun jugador no salto, entonces la cuenta de saltos vuelve a cero
 
         while(true){
 
@@ -133,8 +138,18 @@ public class Game {
 
             if(input.equals("T")){
 
-                players.get(turn).add(sack);
-                board = new Board(aux);
+                if(sack.isEmpty()){
+                    System.out.println("Sack is empty");
+                    continue;
+                }
+
+                //si el jugador no cambio ninguna ficha se cuenta como salto de turno
+                if(!players.get(turn).changeDeck(sack) && skippedEnd()){
+
+                    System.out.println("Game over");
+                    return;
+
+                }
                 nextTurn();
                 return;
 
@@ -155,6 +170,8 @@ public class Game {
 
         if(board.verify()){
 
+            jumps=0; //Si algun jugador no salto, entonces la cuenta de saltos vuelve a cero
+
             int score = board.getScore() - aux.getScore();
 
             if(score == 0 && skippedEnd()){
@@ -167,7 +184,7 @@ public class Game {
             System.out.println("Valid");
             players.get(turn).addScore(score);
 
-            if(players.get(turn).win()){
+            if(players.get(turn).win(sack)){
 
                 System.out.println("Player " + players.get(turn).getName() + " wins!");
                 return;
@@ -180,6 +197,7 @@ public class Game {
         System.out.println("Invalid");
         board = new Board(aux);
         players.get(turn).setDeck(auxDeck.getDeck());
+        sack = new Sack(auxSack);
         turn();
 
 

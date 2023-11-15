@@ -62,11 +62,6 @@ public class Player {
     }
 
 
-    public void add(Sack sack){
-
-        deck.add(sack.pop());
-
-    }
 
     public void removeChar(char i){
 
@@ -87,6 +82,16 @@ public class Player {
     public boolean win(Sack sack){
 
         return deck.isEmpty() && sack.isEmpty();
+
+    }
+
+
+
+    //Si el jugador no cambio ninguna ficha se cuenta como salto de turno
+    //En otro caso true
+    public boolean changeDeck(Sack sack){
+
+        return deck.changeDeck(sack);
 
     }
 

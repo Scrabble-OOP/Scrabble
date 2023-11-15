@@ -1,9 +1,12 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Deck {
 
     List<Token> deck;
+
+    private Scanner scanner = new Scanner(System.in);
 
     public Deck(Sack a){
 
@@ -112,28 +115,46 @@ public class Deck {
     }
 
 
+    //Este metodo devuelve falso, si no hubo ningun cambio por lo que se contara como un salto de turno
+    //En otro caso true
+    public boolean changeDeck(Sack sack){
 
+        List<Token> aux = new ArrayList<>();
 
+        while(true){
 
-    public boolean canFormWord(String word) {
+            System.out.println("Your deck is: " + this);
+            System.out.println("Which letter do you want to change? or if you want to terminate press (E? ");
+            char letter = scanner.next().charAt(0);
 
-        int[] letterCount = new int[27]; // Incluimos un índice adicional para la 'ñ'
-        // Contar las letras en el ArrayList
-        for (Token token : deck) {
+            if(letter == 'E') break;
 
-            int index = ((token.getLetter() == 'ñ') ? 26 : token.getLetter() - 'a');
-            letterCount[index]++;
+            int index = search(letter);
+
+            if(index == -1){
+
+                System.out.println("You don't have that letter in your deck");
+                continue;
+
+            }
+            aux.add(deck.get(index));
+            deck.remove(index);
 
         }
 
-        for (char c : word.toCharArray()) {
+        if(aux.isEmpty()) return false;
 
-            int index = ((c =='ñ') ? 26 : c - 'a');
-            if (letterCount[index] < 0)  return false;
-            letterCount[index]--;                       // No hay suficientes letras para formar la palabra
+        List<Token> changes = sack.changeDeck(aux);
 
-        }return true;
+        for(int i = 0; i<changes.size(); i++) deck.add(new Token(changes.get(i).getLetter()));
+
+        return true;
+
     }
+
+
+
+
 
 
 
