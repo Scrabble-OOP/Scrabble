@@ -1,7 +1,6 @@
 public class Board {
 
     private Cell[][] board;
-
     private int score;
     private TrieTree dictionary;
 
@@ -84,7 +83,6 @@ public class Board {
 
 
     }
-
     public Board(Board aux){
 
         score = aux.getScore();

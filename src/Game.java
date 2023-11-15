@@ -100,16 +100,24 @@ public class Game {
 
         System.out.println("Turn of " + players.get(turn).getName());
         System.out.println("Score: " + players.get(turn).getScore());
+        System.out.println(jumps + " players skipped their turn");
 
         System.out.println("Do you want to play or skip? (p/s)");
         String input = scanner.nextLine();
 
         if(input.equals("s")){
 
+            if(skippedEnd()){
+                System.out.println("Game over");
+                return;
+            }
             nextTurn();
             return;
 
         }
+
+        jumps=0; //Si algun jugador no salto, entonces la cuenta de saltos vuelve a cero
+
         while(true){
 
             System.out.println("Board: ");
@@ -145,8 +153,17 @@ public class Game {
 
         if(board.verify()){
 
+            int score = board.getScore() - aux.getScore();
+
+            if(score == 0 && skippedEnd()){
+
+                System.out.println("Game over");
+                return;
+
+            }
+
             System.out.println("Valid");
-            players.get(turn).addScore(board.getScore() - aux.getScore());
+            players.get(turn).addScore(score);
 
             if(players.get(turn).win()){
 
@@ -164,6 +181,17 @@ public class Game {
         turn();
 
 
+    }
+
+
+
+
+
+
+    private boolean skippedEnd(){
+
+        jumps++;
+        return jumps == players.size();
 
 
     }
