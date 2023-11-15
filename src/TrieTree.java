@@ -38,15 +38,31 @@ public class TrieTree{
 
     public boolean search(String s){
 
-        Node aux = head;
-        int index;
-        for(int i = 0; i < s.length(); i++){
-            char currentChar = s.charAt(i);
-            index = ((currentChar == 'ñ') ? 26 : currentChar - 'a');
-            if(aux.getChild(index) == null)  return false;
-            aux = aux.getChild(index);
-        }
-        return aux.getEnd();
+        System.out.println("Searching for: " + s);
+        Node root = head;
+        return searchAux(root ,0, s);
+
+    }
+
+
+    private boolean searchAux(Node root, int index, String word){
+
+        if(root == null) return false;
+
+        if(index == word.length()) return root.getEnd();
+
+        char currChar = word.charAt(index);
+
+        if(currChar == '☻'){  //Si nos encontramos algun joker, ocupamos que alguna de las letras calce.
+
+            for(int i = 0; i<27; ++i)
+
+                if(searchAux(root.getChild(i), index+1, word)) return true;
+
+            return false;
+
+        }return searchAux(root.getChild((currChar == 'ñ')? 26: currChar - 'a'), index+1, word);  //Llamada recursiva pero desde el siguiente char de la palabra
+
     }
 
 

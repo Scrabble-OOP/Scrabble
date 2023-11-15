@@ -160,6 +160,7 @@ public class Game {
                     return;
 
                 }
+                jumps=0;
                 nextTurn();
                 return;
 
@@ -178,9 +179,8 @@ public class Game {
 
         }
 
-        if(board.verify()){
 
-            jumps=0; //Si algun jugador no salto, entonces la cuenta de saltos vuelve a cero
+        if(board.verify()){
 
             int score = board.getScore() - aux.getScore();
 
@@ -190,6 +190,7 @@ public class Game {
                 return;
 
             }
+            //Si algun jugador no salto, entonces la cuenta de saltos vuelve a cero
 
             System.out.println("Valid");
             players.get(turn).addScore(score);

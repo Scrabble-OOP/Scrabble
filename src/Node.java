@@ -21,10 +21,6 @@ public class Node{
         return data;
     }
 
-    public Node[] getChildren(){
-        return children;
-    }
-
     public Node getChild(int i){
         return children[i];
     }

@@ -18,16 +18,19 @@ public class Token {
 
     }
 
-    public Token(boolean joker) {
 
-        this.letter = 'J';
-        this.score = 0;
-        this.joker = joker;
-
-    }
 
 
     public Token(char letter) {
+
+        if(letter == '☻'){  //puede que haga falta descomentar esto
+
+            this.letter = letter;
+            score = 0;
+            joker = true;
+            return;
+
+        }
 
         this.letter = letter;
 
@@ -66,10 +69,6 @@ public class Token {
 
     public void setToken(char letter) {
         this.letter = letter;
-    }
-
-    public void setScore(byte score) {
-        this.score = score;
     }
 
     public int getScore(){
