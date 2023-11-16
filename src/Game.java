@@ -40,6 +40,10 @@ public class Game {
 
 
 
+    public List<Player> getPlayers() {
+        return players;
+    }
+
     public void printPoints(){
 
         for (Player player : players) {
@@ -119,6 +123,7 @@ public class Game {
         System.out.println("Turn of " + players.get(turn).getName());
         System.out.println("Score: " + players.get(turn).getScore());
         System.out.println(jumps + " players skipped their turn");
+        System.out.println("size of Sack: " + sack.size());
 
         System.out.println("Do you want to play or skip? (p/s)");
         String input = scanner.nextLine();
@@ -149,18 +154,18 @@ public class Game {
             if(input.equals("T")){
 
                 if(sack.isEmpty()){
+
                     System.out.println("Sack is empty");
                     continue;
                 }
 
-                //si el jugador no cambio ninguna ficha se cuenta como salto de turno
-                if(!players.get(turn).changeDeck(sack) && skippedEnd()){
+                if(players.get(turn).changeDeck(sack)) jumps=0;
+                else if(skippedEnd()){             //si el jugador no cambio ninguna ficha se cuenta como salto de turno
 
                     System.out.println("Game over");
                     return;
 
                 }
-                jumps=0;
                 nextTurn();
                 return;
 
@@ -184,12 +189,15 @@ public class Game {
 
             int score = board.getScore() - aux.getScore();
 
-            if(score == 0 && skippedEnd()){
+
+            if(score == 0 && auxSack.size() == sack.size() && skippedEnd()){
 
                 System.out.println("Game over");
                 return;
 
             }
+
+
             //Si algun jugador no salto, entonces la cuenta de saltos vuelve a cero
 
             System.out.println("Valid");
@@ -251,12 +259,9 @@ public class Game {
 
     private boolean skippedEnd(){
 
-        jumps++;
-        if(jumps != players.size()) return false;
-
+        if(++jumps < players.size()) return false;
         sumSkippedEnd();
         return true;
-
 
     }
     //Esta funcion resta la suma de las fichas que quedaron en el atril de cada jugador

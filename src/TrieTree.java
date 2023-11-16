@@ -38,7 +38,6 @@ public class TrieTree{
 
     public boolean search(String s){
 
-        System.out.println("Searching for: " + s);
         Node root = head;
         return searchAux(root ,0, s);
 
