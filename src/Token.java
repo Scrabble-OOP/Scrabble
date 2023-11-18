@@ -1,4 +1,6 @@
-public class Token {
+import javax.swing.*;
+
+public class Token extends JButton {
 
     private char letter;
     private int score;
@@ -28,6 +30,7 @@ public class Token {
 
 
     public Token(char letter) {
+        this.setText("" + letter);
 
         this.letter = letter;
 
@@ -48,6 +51,7 @@ public class Token {
         this.letter = aux.getLetter();
         this.score = aux.getScore();
         this.joker = aux.isJoker();
+        this.setText("" + getLetter());
 
     }
 

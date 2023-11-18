@@ -1,4 +1,7 @@
-public class Cell {
+import javax.swing.*;
+import java.awt.*;
+
+public class Cell extends JButton{
 
     private int factLetter;
     private int factWord;
@@ -9,7 +12,7 @@ public class Cell {
 
 
 
-
+    private Font font = new Font("Roboto", Font.BOLD, 10);
 
     public Cell(int factLetter, int factWord) {
 
@@ -31,6 +34,8 @@ public class Cell {
         this.factLetter = 1;
         this.factWord = 1;
         this.token = new Token();
+        this.setText("");
+        this.setFont(font);
 
     }
 
