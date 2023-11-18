@@ -27,38 +27,17 @@ public class Game {
             players.add(new Player("Player: " + i, sack));
 
         }turn = jumps = 0;
-
-    }
-
-
-
-    public void start(){
-
         turn();
 
     }
 
 
 
-    public List<Player> getPlayers() {
-        return players;
-    }
-
-    public void printPoints(){
-
-        for (Player player : players) {
-            System.out.println(player.getName() + " " + player.getScore());
-        }
-
-    }
 
 
 
-    //Se llama cuando un jugador termina su turno
-    //Reponemos su deck y pasamos al siguiente jugador
-    private void nextTurn(){
+    public void nextTurn(){
 
-        players.get(turn).replenishDeck(sack);
         turn = (turn+1)%players.size();
         turn();
 
@@ -114,16 +93,14 @@ public class Game {
 
 
 
-    private void turn(){
+    public void turn(){
 
         Board aux = new Board(board);
         Deck auxDeck = new Deck(players.get(turn).getDeck());
-        Sack auxSack = new Sack(sack);
 
         System.out.println("Turn of " + players.get(turn).getName());
         System.out.println("Score: " + players.get(turn).getScore());
         System.out.println(jumps + " players skipped their turn");
-        System.out.println("size of Sack: " + sack.size());
 
         System.out.println("Do you want to play or skip? (p/s)");
         String input = scanner.nextLine();
@@ -139,6 +116,7 @@ public class Game {
 
         }
 
+        jumps=0; //Si algun jugador no salto, entonces la cuenta de saltos vuelve a cero
 
         while(true){
 
@@ -153,19 +131,8 @@ public class Game {
 
             if(input.equals("T")){
 
-                if(sack.isEmpty()){
-
-                    System.out.println("Sack is empty");
-                    continue;
-                }
-
-                if(players.get(turn).changeDeck(sack)) jumps=0;
-                else if(skippedEnd()){             //si el jugador no cambio ninguna ficha se cuenta como salto de turno
-
-                    System.out.println("Game over");
-                    return;
-
-                }
+                players.get(turn).add(sack);
+                board = new Board(aux);
                 nextTurn();
                 return;
 
@@ -184,28 +151,22 @@ public class Game {
 
         }
 
-
         if(board.verify()){
 
             int score = board.getScore() - aux.getScore();
 
-
-            if(score == 0 && auxSack.size() == sack.size() && skippedEnd()){
+            if(score == 0 && skippedEnd()){
 
                 System.out.println("Game over");
                 return;
 
             }
 
-
-            //Si algun jugador no salto, entonces la cuenta de saltos vuelve a cero
-
             System.out.println("Valid");
             players.get(turn).addScore(score);
 
-            if(players.get(turn).win(sack)){
+            if(players.get(turn).win()){
 
-                sumWinnerEnd();
                 System.out.println("Player " + players.get(turn).getName() + " wins!");
                 return;
 
@@ -217,7 +178,6 @@ public class Game {
         System.out.println("Invalid");
         board = new Board(aux);
         players.get(turn).setDeck(auxDeck.getDeck());
-        sack = new Sack(auxSack);
         turn();
 
 
@@ -228,63 +188,13 @@ public class Game {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private boolean skippedEnd(){
 
-        if(++jumps < players.size()) return false;
-        sumSkippedEnd();
-        return true;
+        jumps++;
+        return jumps == players.size();
 
-    }
-    //Esta funcion resta la suma de las fichas que quedaron en el atril de cada jugador
-    private void sumSkippedEnd(){
-
-        for(Player player : players) player.addScore(-player.sumDeck());
 
     }
 
-    private void sumWinnerEnd(){
-
-        int min = Integer.MAX_VALUE, index = turn; //Esto es debido a que si se llama esta funcion implica que el jugador del turno actual fue el que gano
-
-        for(int i = 0; i<players.size(); i++){
-
-            if(i == index){
-                players.get(i).addScore(players.get(i).sumDeck());   //Al que gano se le suman los puntajes de sus fichas
-                continue;
-            }
-            players.get(i).addScore(-players.get(i).sumDeck());  // a los que perdieron se les restan
-
-        }
-
-    }
 
 }
