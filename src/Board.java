@@ -89,6 +89,7 @@ public class Board {
         dictionary = aux.dictionary;
         board = new Cell[15][15];
         for(int i = 0; i<225; i++) board[i/15][i%15] = new Cell(aux.getCell(i/15, i%15));
+        for(int i = 0; i<225; i++) board[i/15][i%15].setText(aux.getCell(i/15, i%15).getText());
 
     }
 
