@@ -38,6 +38,7 @@ public class Game extends JFrame implements ActionListener {
     private Font fontE = new Font("Roboto", Font.BOLD, 15);
     private List<Token> changes = new ArrayList<>();
     private JLabel jumpsLabel = new JLabel();
+    private JLabel fichasRestantesLabel = new JLabel();
 
 
 
@@ -62,6 +63,7 @@ public class Game extends JFrame implements ActionListener {
 
 
     public void fill() {
+
         for (int i = 0; i < 15; i++) {
             alphabet[i] = currentChar;
             if (currentChar == 'O') {
@@ -94,10 +96,15 @@ public class Game extends JFrame implements ActionListener {
         this.setSize(1000, 800);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(null);
-        for(int i = 0; i<n; i++) players.add(new Player("Player: " + i, sack));
+        for(int i = 0; i<n; i++) players.add(new Player("Player: " + i, sack)); //aqui hay que introducir los nombres de los jugadores
         Collections.shuffle(players);
         turn = jumps = 0;
+        fichasRestantesLabel = new JLabel("Fichas restantes: " + sack.size());
+        fichasRestantesLabel.setBounds(697, 613, 200, 20);
+        fichasRestantesLabel.setFont(new Font("Roboto", Font.BOLD, 9));
+        this.add(fichasRestantesLabel);
         turn();
+
 
     }
 
@@ -152,11 +159,11 @@ public class Game extends JFrame implements ActionListener {
         cell.setFont(fontC);
         if(cell.getFactLetter() != 1 && cell.getToken().getLetter() == '_'){
             cell.setText(cell.getFactLetter() + "XL");
+            cell.setBackground(Color.RED);
         }
         if(cell.getFactWord() != 1 && cell.getToken().getLetter() == '_'){
-            cell.setBackground(Color.pink);
             cell.setText(cell.getFactWord() + "XW");
-            cell.setBackground(Color.RED);
+            cell.setBackground(Color.ORANGE);
         }
         this.add(cell);
         cell.addActionListener(this);
@@ -181,6 +188,12 @@ public class Game extends JFrame implements ActionListener {
 
     public void nextTurn(){
 
+        if(skippedEnd()){ //si todos los jugadores saltaron su turno, el juego termina
+
+            JOptionPane.showMessageDialog(null, "Game over");
+            System.exit(0);
+
+        }
         current.replenishDeck(sack);
         turn = (turn+1)%players.size();
         aux = new Board(board);
@@ -193,6 +206,7 @@ public class Game extends JFrame implements ActionListener {
         jumpsLabel.setText("Quedan: " + (players.size()-jumps) + " saltos");
         changes.clear();
         addDeck();
+        fichasRestantesLabel.setText("Fichas restantes: " + sack.size());
 
     }
 
@@ -233,7 +247,7 @@ public class Game extends JFrame implements ActionListener {
 
     public void addDeck(){
         for(int i = 0; i < current.getDeck().size(); i++){
-            addToken(current.getDeck().get(i), i * 62 + 280, 640);
+            addToken(current.getDeck().get(i), i * 62 + 250, 640);
         }
     }
 
@@ -403,7 +417,6 @@ public class Game extends JFrame implements ActionListener {
                 insert.setText("" + (++counter));
                 buffer = null;
 
-
             }
 
         }
@@ -426,11 +439,18 @@ public class Game extends JFrame implements ActionListener {
                 int auxScore = board.getScore() - aux.getScore();
                 current.addScore(auxScore);
                 if(auxScore == 0 && auxSack.size() == sack.size()) jumps++;
-                else jumps = 0;
+
+                else if(current.win(sack)){
+
+                    sumWinnerEnd();
+                    JOptionPane.showMessageDialog(null, "Player " + players.get(turn).getName() + " wins!");
+                    System.exit(0);
+
+
+                }jumps = 0;
                 buffer = null;
                 nextTurn();
             }
-
 
         }
         if(e.getSource() == restart){
@@ -460,7 +480,6 @@ public class Game extends JFrame implements ActionListener {
                 }
             }
         }
-
     }
 
 
@@ -470,13 +489,13 @@ public class Game extends JFrame implements ActionListener {
 
     public void turn(){
 
-        terminate.setBounds(720, 720, 100, 20);
+        terminate.setBounds(690, 720, 100, 20);
         terminate.setText("Terminar");
         terminate.addActionListener(this);
         terminate.setFont(fontC);
         terminate.setVisible(false);
         this.add(terminate);
-        insert.setBounds(720, 630, 100, 80);
+        insert.setBounds(690, 630, 100, 80);
         insert.setText("" + counter);
         insert.addActionListener(this);
         insert.setFont(fontD);
@@ -487,14 +506,14 @@ public class Game extends JFrame implements ActionListener {
         for(int i = 0; i < 15; i ++){
             JLabel letter = new JLabel();
             letter.setText("" + alphabet[i]);
-            letter.setBounds(i * 40 + 215, -10, 40, 40);
+            letter.setBounds(i * 40 + 215, -13, 40, 40);
             this.add(letter);
             letter.setVisible(true);
         }
         for(int i = 0; i < 15; i++){
             JLabel letter = new JLabel();
             letter.setText("" + (i + 1));
-            letter.setBounds(175, i * 40 + 15, 40, 40);
+            letter.setBounds(177, i * 40 + 15, 40, 40);
             this.add(letter);
             letter.setVisible(true);
         }
@@ -503,7 +522,7 @@ public class Game extends JFrame implements ActionListener {
         auxDeck = new Deck(players.get(turn).getDeck());
         auxSack = new Sack(sack);
 
-        change.setBounds(720, 630, 100, 80);
+        change.setBounds(690, 630, 100, 80);
         change.setText("Cambiar Fichas");
         change.addActionListener(this);
         change.setFont(fontC);
@@ -523,8 +542,6 @@ public class Game extends JFrame implements ActionListener {
         skip.addActionListener(this);
         skip.setFont(fontC);
         this.add(skip);
-
-
 
 
         current = players.get(turn);
@@ -590,7 +607,7 @@ public class Game extends JFrame implements ActionListener {
 
 
 
-
+        /*
         System.out.println("Turn of " + players.get(turn).getName());
         System.out.println("Score: " + players.get(turn).getScore());
         System.out.println(jumps + " players skipped their turn");
@@ -689,7 +706,7 @@ public class Game extends JFrame implements ActionListener {
         board = new Board(aux);
         players.get(turn).setDeck(auxDeck.getDeck());
         sack = new Sack(auxSack);
-        turn();
+        turn();*/
 
 
     }
@@ -698,7 +715,7 @@ public class Game extends JFrame implements ActionListener {
 
     private boolean skippedEnd(){
 
-        if(++jumps < players.size()) return false;
+        if(jumps < players.size()) return false;
         sumSkippedEnd();
         return true;
 
