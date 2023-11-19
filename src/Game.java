@@ -17,21 +17,27 @@ public class Game extends JFrame implements ActionListener {
     private int jumps;
     private char[] alphabet = new char[15]; // Creating an array to hold 15 characters (A to O)
     private char currentChar = 'A';
-    private JButton plus = new JButton();
-    private JButton minus = new JButton();
+    private JButton terminate = new JButton();
+    private JButton insert = new JButton();
     private Sack auxSack;
     private Token buffer = null;
     private JButton skip = new JButton();
     private JButton restart = new JButton();
+    private JButton change = new JButton();
     private JButton makeT = new JButton();
     private Board aux;
     private Deck auxDeck;
     private JLabel name = new JLabel();
+    private JLabel score = new JLabel();
     private int counter = 0;
     private JLabel cont = new JLabel();
     private Scanner scanner = new Scanner(System.in);
     private Player current;
     private Font fontC = new Font("Roboto", Font.BOLD, 10);
+    private Font fontD = new Font("Roboto", Font.BOLD, 20);
+    private Font fontE = new Font("Roboto", Font.BOLD, 15);
+    private List<Token> changes = new ArrayList<>();
+    private JLabel jumpsLabel = new JLabel();
 
 
 
@@ -182,7 +188,10 @@ public class Game extends JFrame implements ActionListener {
         removeDeck();
         current = players.get(turn);
         auxDeck = new Deck(current.getDeck());
-        name.setText(players.get(turn).getName());
+        name.setText("Turno de: " + players.get(turn).getName());
+        score.setText("Puntaje: " + players.get(turn).getScore());
+        jumpsLabel.setText("Quedan: " + (players.size()-jumps) + " saltos");
+        changes.clear();
         addDeck();
 
     }
@@ -240,19 +249,12 @@ public class Game extends JFrame implements ActionListener {
 
 
 
-    public void addPlusMinus(){
-        plus.setBounds(890, 655, 40, 40);
-        plus.setText("+");
-        plus.addActionListener(this);
-        plus.setFont(fontC);
-        plus.setVisible(true);
-        minus.setBounds(820, 655, 40, 40);
-        minus.setText("-");
-        minus.addActionListener(this);
-        minus.setFont(fontC);
-        cont.setBounds(870, 655, 40, 40);
-        cont.setText("" + counter);
-        cont.setFont(fontC);
+    public void addChangeButtons(){
+
+        terminate.setVisible(true);
+        insert.setVisible(true);
+        change.setVisible(false);
+
     }
 
 
@@ -266,9 +268,11 @@ public class Game extends JFrame implements ActionListener {
 
 
     public void removeCell(Cell cell){
+
         cell.setBounds(1500, 1500, 0, 0);
         cell.removeActionListener(this);
         this.remove(cell);
+
     }
 
 
@@ -281,11 +285,9 @@ public class Game extends JFrame implements ActionListener {
 
 
     public void removeTablero(){
-        for(int k = 0; k < 15; k ++){
-            for(int u = 0; u < 15; u ++){
+        for(int k = 0; k < 15; k ++)
+            for(int u = 0; u < 15; u ++)
                 removeCell(board.getCell(k, u));
-            }
-        }
     }
 
 
@@ -343,6 +345,7 @@ public class Game extends JFrame implements ActionListener {
 
 
     public void refTablero(){
+
         removeTablero();
         board = new Board(aux);
         addTablero();
@@ -357,19 +360,77 @@ public class Game extends JFrame implements ActionListener {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        if(e.getSource() == terminate && buffer == null){
+
+            terminate.setVisible(false);
+            insert.setVisible(false);
+            change.setVisible(true);
+            if(players.get(turn).changeDeck(sack, changes)) jumps = 0;
+            else jumps++;
+            nextTurn();
+
+
+        }
+        if(e.getSource() == insert){
+
+            if (buffer != null) {
+
+                changes.add(buffer);
+                insert.setText("" + (++counter));
+                buffer = null;
+
+
+            }
+
+        }
+        if(e.getSource() == change){
+
+            //Aqui hay que encontrar alguna manera de no permitir que el jugador no pueda apretar ningun boton que no sea insert o terminate
+            counter = 0;
+            addChangeButtons();
+
+        }
         if(e.getSource() == skip){
+
+            jumps++;
             refTablero();
-            addPlusMinus();
+            nextTurn();
 
         }
         if(e.getSource() == makeT){
             if(board.verify()) {
-                //current.addScore(board.getScore() - aux.getScore());
+                int auxScore = board.getScore() - aux.getScore();
+                current.addScore(auxScore);
+                if(auxScore == 0 && auxSack.size() == sack.size()) jumps++;
+                else jumps = 0;
                 buffer = null;
                 nextTurn();
             }
+
 
         }
         if(e.getSource() == restart){
@@ -408,12 +469,20 @@ public class Game extends JFrame implements ActionListener {
 
 
     public void turn(){
-        plus.setBounds(2000, 2000, 0, 0);
-        this.add(plus);
-        minus.setBounds(2000, 2000, 0, 0);
-        this.add(minus);
-        cont.setBounds(2000, 2000, 0, 0);
-        this.add(cont);
+
+        terminate.setBounds(720, 720, 100, 20);
+        terminate.setText("Terminar");
+        terminate.addActionListener(this);
+        terminate.setFont(fontC);
+        terminate.setVisible(false);
+        this.add(terminate);
+        insert.setBounds(720, 630, 100, 80);
+        insert.setText("" + counter);
+        insert.addActionListener(this);
+        insert.setFont(fontD);
+        insert.setVisible(false);
+        this.add(insert);
+
 
         for(int i = 0; i < 15; i ++){
             JLabel letter = new JLabel();
@@ -434,33 +503,92 @@ public class Game extends JFrame implements ActionListener {
         auxDeck = new Deck(players.get(turn).getDeck());
         auxSack = new Sack(sack);
 
-        skip.setBounds(720, 630, 100, 80);
-        skip.setText("Saltar Turno");
-        skip.addActionListener(this);
-        skip.setFont(fontC);
-        this.add(skip);
-        restart.setBounds(50, 320, 100, 80);
+        change.setBounds(720, 630, 100, 80);
+        change.setText("Cambiar Fichas");
+        change.addActionListener(this);
+        change.setFont(fontC);
+        this.add(change);
+        restart.setBounds(50, 280, 100, 80);
         restart.setText("Reiniciar Tablero");
         restart.addActionListener(this);
         restart.setFont(fontC);
         this.add(restart);
-        makeT.setBounds(850, 320, 100, 80);
+        makeT.setBounds(850, 214, 100, 80);
         makeT.setText("Jugar");
         makeT.addActionListener(this);
         makeT.setFont(fontC);
         this.add(makeT);
+        skip.setBounds(850, 339, 100, 80);
+        skip.setText("Saltar Turno");
+        skip.addActionListener(this);
+        skip.setFont(fontC);
+        this.add(skip);
+
+
 
 
         current = players.get(turn);
         addDeck();
         addTablero();
 
-        name.setText(players.get(turn).getName());
-        name.setBounds(480, 620, 40, 20);
-        name.setFont(fontC);
+        name.setText("Turno de: " + players.get(turn).getName());
+        score.setText("Puntaje: " + players.get(turn).getScore());
+        name.setBounds(438, 715, 300, 20);
+        score.setBounds(465, 745, 100, 20);
+        name.setFont(fontE);
+        score.setFont(fontE);
         this.add(name);
+        this.add(score);
         name.setVisible(true);
+        score.setVisible(true);
         this.setVisible(true);
+        jumpsLabel.setText("Quedan: " + (players.size()-jumps) + " saltos");
+        jumpsLabel.setBounds(859, 400, 100, 80);
+        jumpsLabel.setFont(fontC);
+        this.add(jumpsLabel);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //juego en la terminal
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         System.out.println("Turn of " + players.get(turn).getName());

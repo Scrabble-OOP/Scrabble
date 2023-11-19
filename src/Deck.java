@@ -136,6 +136,19 @@ public class Deck {
     }
 
 
+    public boolean changeDeck(Sack sack, List<Token> lista){
+
+        if(lista.isEmpty()) return false;
+
+        List<Token> changes = sack.changeDeck(lista);
+
+        for(int i = 0; i<changes.size(); i++) deck.add(new Token(changes.get(i).getLetter()));
+
+        return true;
+
+    }
+
+
 
 
 

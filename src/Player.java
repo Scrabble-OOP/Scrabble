@@ -82,11 +82,25 @@ public class Player {
 
 
 
+
+
+
+
+
+
+
+
     //Si el jugador no cambio ninguna ficha se cuenta como salto de turno
     //En otro caso true
     public boolean changeDeck(Sack sack){
 
         return deck.changeDeck(sack);
+
+    }
+
+    public boolean changeDeck(Sack sack, List<Token> lista){
+
+        return deck.changeDeck(sack, lista);
 
     }
 
