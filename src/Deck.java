@@ -125,27 +125,6 @@ public class Deck {
 
         List<Token> aux = new ArrayList<>();
 
-        while(true){
-
-            System.out.println("Your deck is: " + this);
-            System.out.println("Which letter do you want to change? or if you want to terminate press (E? ");
-            char letter = scanner.next().charAt(0);
-
-            if(letter == 'E') break;
-
-            int index = search(letter);
-
-            if(index == -1){
-
-                System.out.println("You don't have that letter in your deck");
-                continue;
-
-            }
-            aux.add(deck.get(index));
-            deck.remove(index);
-
-        }
-
         if(aux.isEmpty()) return false;
 
         List<Token> changes = sack.changeDeck(aux);
