@@ -692,7 +692,7 @@ public class Game extends JFrame implements ActionListener {
         for(int i = 0; i < 15; i ++){
             for(int j = 0; j < 15; j++){
                 if(e.getSource() == board.getCell(i, j)){
-                    if(buffer != null && enableCell){
+                    if(buffer != null && enableCell && board.getCell(i, j).getToken().getLetter() == '_'){
                         board.getCell(i, j).setToken(new Token(buffer));
                         board.getCell(i, j).setText(board.getCell(i, j).getToken().getLetter() + "");
                         buffer = null;
