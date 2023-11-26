@@ -39,6 +39,7 @@ public class Game extends JFrame implements ActionListener {
     private JLabel jumpsLabel = new JLabel();
     private JLabel fichasRestantesLabel = new JLabel();
     private boolean enableCell = true;
+    private boolean open = true;
 
 
 
@@ -112,6 +113,10 @@ public class Game extends JFrame implements ActionListener {
         turn();
 
 
+    }
+
+    public List<Player> getPlayers(){
+        return players;
     }
 
 
@@ -207,7 +212,8 @@ public class Game extends JFrame implements ActionListener {
         if(skippedEnd()){ //si todos los jugadores saltaron su turno, el juego termina
 
             JOptionPane.showMessageDialog(null, "Game over");
-            System.exit(0);
+            this.dispose();
+            this.setVisible(false);
 
         }
         current.replenishDeck(sack);
